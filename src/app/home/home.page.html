@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Trending Movies
+      Home
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -13,30 +13,33 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-item *ngFor="let movie of trendingMovies">
-    <ion-thumbnail slot="start">
-      <img [src]="'https://image.tmdb.org/t/p/w200' + movie.poster_path" />
-    </ion-thumbnail>
-    <ion-label>
-      <h2>{{ movie.title }}</h2>
-      <p>Rating: {{ movie.vote_average | number: '1.2-2' }}</p>
-    </ion-label>
-  </ion-item>
+  <ion-button (click)="toggleView(true)" [fill]="showMovies ? 'solid' : 'outline'">Movies</ion-button>
+  <ion-button (click)="toggleView(false)" [fill]="!showMovies ? 'solid' : 'outline'">TV Shows</ion-button>
 
-  <ion-item *ngFor="let shows of trendingShows">
-    <ion-thumbnail slot="start">
-      <img [src]="'https://image.tmdb.org/t/p/w200' + shows.poster_path" />
-    </ion-thumbnail>
-    <ion-label>
-      <h2>{{ shows.name }}</h2>
-      <p>Rating: {{ shows.vote_average | number: '1.2-2' }}</p>
-      <p>{{ shows.runtime }}</p>
-    </ion-label>
-  </ion-item>
 
-  <ng-template #loading>
-    <ion-item>
-      <ion-label>Loading movies...</ion-label>
+  <ng-container *ngIf="showMovies">
+    <ion-item *ngFor="let movie of trendingMovies">
+      <ion-thumbnail slot="start">
+        <img [src]="'https://image.tmdb.org/t/p/w200' + movie.poster_path" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ movie.title }}</h2>
+        <p>Rating: {{ movie.vote_average | number: '1.2-2' }}</p>
+        <p *ngIf="movie.runtime">{{ movie.release_date | date:'yyyy' }} · {{ movie.runtime }}m</p>
+      </ion-label>
     </ion-item>
-  </ng-template>
+  </ng-container>
+
+  <ng-container *ngIf="!showMovies">
+    <ion-item *ngFor="let shows of trendingShows">
+      <ion-thumbnail slot="start">
+        <img [src]="'https://image.tmdb.org/t/p/w200' + shows.poster_path" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ shows.name }}</h2>
+        <p>Rating: {{ shows.vote_average | number: '1.2-2' }}</p>
+        <p *ngIf="shows.number_of_seasons">{{ shows.first_air_date | date:'yyyy' }} · {{ shows.number_of_seasons }}SS</p> 
+      </ion-label>
+    </ion-item>
+  </ng-container>
 </ion-content>

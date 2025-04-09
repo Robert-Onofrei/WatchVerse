@@ -18,4 +18,11 @@ export class MovieService {
     return this.http.get(`https://api.themoviedb.org/3/trending/tv/week?api_key=${this.apiKey}`);
   }
 
+  getMovieDetails(movieId: number):Observable<any> {
+    return this.http.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${this.apiKey}`);
+  }
+
+  getShowDetails(showId: number) {
+    return this.http.get(`https://api.themoviedb.org/3/tv/${showId}?api_key=${this.apiKey}`);
+  }
 }
