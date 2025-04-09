@@ -38,7 +38,7 @@
       <ion-label>
         <h2>{{ shows.name }}</h2>
         <p>Rating: {{ shows.vote_average | number: '1.2-2' }}</p>
-        <p *ngIf="shows.number_of_seasons">{{ shows.first_air_date | date:'yyyy' }} · {{ shows.number_of_seasons }}SS</p> 
+        <p *ngIf="shows.number_of_seasons">{{ shows.first_air_date | date:'yyyy' }} · {{ shows.number_of_seasons }}s</p> 
       </ion-label>
     </ion-item>
   </ng-container>
