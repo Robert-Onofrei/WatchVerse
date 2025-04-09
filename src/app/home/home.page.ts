@@ -2,14 +2,14 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MovieService } from '../services/movie.service';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonThumbnail, IonLabel, IonButton, IonSegmentButton, IonSegment } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonThumbnail, IonLabel, IonButton, IonSegmentButton, IonSegment, IonGrid, IonCol, IonRow, IonCard } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   providers: [MovieService],
-  imports: [IonSegment, IonSegmentButton, IonButton, CommonModule, HttpClientModule, IonItem, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonThumbnail, IonLabel],
+  imports: [IonCard, IonRow, IonCol, IonGrid, IonSegment, IonSegmentButton, IonButton, CommonModule, HttpClientModule, IonItem, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonThumbnail, IonLabel],
 })
 export class HomePage implements OnInit{
   trendingMovies: any[] = [];
@@ -30,7 +30,7 @@ export class HomePage implements OnInit{
               movie.runtime = details.runtime;
             }); 
           });
-        });
+      });
 
     this.movieService.getTrendingShows().subscribe(
       (data: any) => {
