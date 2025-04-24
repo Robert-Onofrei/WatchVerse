@@ -18,28 +18,28 @@
 
 
   <ng-container *ngIf="showMovies">
-    <ion-item *ngFor="let movie of trendingMovies">
-      <ion-thumbnail slot="start">
-        <img [src]="'https://image.tmdb.org/t/p/w200' + movie.poster_path" />
-      </ion-thumbnail>
-      <ion-label>
-        <h2>{{ movie.title }}</h2>
-        <p>Rating: {{ movie.vote_average | number: '1.2-2' }}</p>
-        <p *ngIf="movie.runtime">{{ movie.release_date | date:'yyyy' }} · {{ movie.runtime }}m</p>
-      </ion-label>
-    </ion-item>
+    <div class="grid-container">
+      <div class="grid-item" *ngFor="let movie of trendingMovies">
+        <img class="movie-poster" [src]="'https://image.tmdb.org/t/p/w200' + movie.poster_path" />
+        <div class="movie-info">
+          <h3>{{ movie.title }}</h3>
+          <p>Rating: {{ movie.vote_average | number: '1.2-2' }}</p>
+          <p *ngIf="movie.runtime">{{ movie.release_date | date:'yyyy' }} · {{ movie.runtime }}m</p>
+        </div>
+      </div>
+    </div>
   </ng-container>
-
+  
   <ng-container *ngIf="!showMovies">
-    <ion-item *ngFor="let shows of trendingShows">
-      <ion-thumbnail slot="start">
-        <img [src]="'https://image.tmdb.org/t/p/w200' + shows.poster_path" />
-      </ion-thumbnail>
-      <ion-label>
-        <h2>{{ shows.name }}</h2>
-        <p>Rating: {{ shows.vote_average | number: '1.2-2' }}</p>
-        <p *ngIf="shows.number_of_seasons">{{ shows.first_air_date | date:'yyyy' }} · {{ shows.number_of_seasons }}s</p> 
-      </ion-label>
-    </ion-item>
-  </ng-container>
+    <div class="grid-container">
+      <div class="grid-item" *ngFor="let shows of trendingShows">
+        <img class="movie-poster" [src]="'https://image.tmdb.org/t/p/w200' + shows.poster_path" />
+        <div class="movie-info">
+          <h3>{{ shows.name }}</h3>
+          <p>Rating: {{ shows.vote_average | number: '1.2-2' }}</p>
+          <p *ngIf="shows.number_of_seasons">{{ shows.first_air_date | date:'yyyy' }} · {{ shows.number_of_seasons }}s</p>
+        </div>
+      </div>
+    </div>
+  </ng-container>  
 </ion-content>
