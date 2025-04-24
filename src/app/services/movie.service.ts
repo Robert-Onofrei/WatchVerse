@@ -22,7 +22,16 @@ export class MovieService {
     return this.http.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${this.apiKey}`);
   }
 
-  getShowDetails(showId: number) {
+  getShowDetails(showId: number):Observable<any>{
     return this.http.get(`https://api.themoviedb.org/3/tv/${showId}?api_key=${this.apiKey}`);
   }
+
+  getPopularMovies(): Observable<any> {
+    return this.http.get(`https://api.themoviedb.org/3/movie/popular?api_key=${this.apiKey}`);
+  }
+  
+  getPopularShows(): Observable<any> {
+    return this.http.get(`https://api.themoviedb.org/3/tv/popular?api_key=${this.apiKey}`);
+  }
+
 }
