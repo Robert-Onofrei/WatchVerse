@@ -1,24 +1,124 @@
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(7, 140px);
+  grid-template-columns: repeat(7, 180px);
   column-gap: 5px;
   row-gap: 10px;
   justify-content: center;
   margin-top: 20px;
 }
 
-.grid-item {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
+@media (max-width: 1200px) {
+  .grid-container {
+    grid-template-columns: repeat(5, 160px);  
+  }
+}
+
+@media (max-width: 992px) {
+  .grid-container {
+    grid-template-columns: repeat(4, 180px);  
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(3, 200px); 
+  }
+}
+
+@media (max-width: 576px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 200px);  
+  }
+}
+
+@media (max-width: 420px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 175px);  
+  }
+}
+
+@media (max-width: 320px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
 }
 
 .movie-poster {
-  width: 140px;
-  height: 240px;
+  width: 180px;
+  height: 280px;
   object-fit: cover;
   border-radius: 5px;
+}
+
+@media (max-width: 1200px) {
+  .movie-poster {
+    width: 160px;
+    height: 280px;  
+  }
+}
+
+@media (max-width: 992px) {
+  .movie-poster {
+    width: 180px;
+    height: 300px;  
+  }
+}
+
+@media (max-width: 768px) {
+  .movie-poster {
+    width: 200px;
+    height: 320px;  
+  }
+}
+
+@media (max-width: 576px) {
+  .movie-poster {
+    width: 200px;
+    height: 300px;  
+  }
+}
+
+@media (max-width: 420px) {
+  .movie-poster {
+    width: 175px;
+    height: 280px;  
+  }
+}
+
+@media (max-width: 320px) {
+  .movie-poster {
+    width: 100%;
+    height: auto; 
+  }
+}
+
+.trending-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 10px 10px;
+}
+
+.trending-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  flex: 1;
+}
+
+.toggle-buttons {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.toggle-buttons ion-button {
+  margin-left: 5px;
+}
+
+@media (max-width: 576px) {
+  .toggle-buttons {
+    flex-direction: column;
+  }
 }
 
 .movie-info {
@@ -38,3 +138,4 @@
   margin: 2px 0;
   color: #888;
 }
+

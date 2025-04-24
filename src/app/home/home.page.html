@@ -9,14 +9,18 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Trending</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ion-button (click)="toggleView(true)" [fill]="showMovies ? 'solid' : 'outline'">Movies</ion-button>
-  <ion-button (click)="toggleView(false)" [fill]="!showMovies ? 'solid' : 'outline'">TV Shows</ion-button>
-
-
+  <div class="trending-header">
+    <h2>Trending</h2>
+    <div class="toggle-buttons">
+      
+      <ion-button (click)="toggleView(true)" [fill]="showMovies ? 'solid' : 'outline'">Movies</ion-button>
+      <ion-button (click)="toggleView(false)" [fill]="!showMovies ? 'solid' : 'outline'">TV Shows</ion-button>
+    </div>
+  </div>
+  
   <ng-container *ngIf="showMovies">
     <div class="grid-container">
       <div class="grid-item" *ngFor="let movie of trendingMovies">
@@ -41,5 +45,4 @@
         </div>
       </div>
     </div>
-  </ng-container>  
-</ion-content>
+  </ng-container>
