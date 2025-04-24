@@ -2,36 +2,39 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MovieService } from '../services/movie.service';
+import { FavouritesService } from '../services/favourites.service';
+import { Router, RouterLink } from '@angular/router';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonThumbnail, IonLabel, IonButton, IonSegmentButton, IonSegment, IonGrid, IonCol, IonRow, IonCard, IonIcon } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  providers: [MovieService],
-  imports: [IonIcon, IonCard, IonRow, IonCol, IonGrid, IonSegment, IonSegmentButton, IonButton, CommonModule, HttpClientModule, IonItem, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonThumbnail, IonLabel],
+  providers: [MovieService, FavouritesService],
+  imports: [IonIcon, IonCard, IonRow, IonCol, IonGrid, IonSegment, IonSegmentButton, RouterLink, IonButton, CommonModule, HttpClientModule, IonItem, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonThumbnail, IonLabel],
 })
-export class HomePage implements OnInit{
+export class HomePage implements OnInit {
   trendingMovies: any[] = [];
   trendingShows: any[] = [];
   showMovies: boolean = true;
-  
-  constructor(private movieService: MovieService) {}
+  activeTab: string = 'popular-movies';
+  favourites$: any[] = []; 
 
-  ngOnInit(): void{
+  constructor(private movieService: MovieService, private favouritesService: FavouritesService) {}
+
+  ngOnInit(): void {
     this.movieService.getTrendingMovies().subscribe(
       (data: any) => {
         this.trendingMovies = data.results;
-  
+
         this.trendingMovies.forEach(
           (movie: any) => {
-            movie.media_type = 'movie';
             this.movieService.getMovieDetails(movie.id).subscribe(
               (details: any) => {
-              movie.runtime = details.runtime;
-            }); 
+                movie.runtime = details.runtime;
+              });
           });
-      });+
+      });
 
     this.movieService.getTrendingShows().subscribe(
       (data: any) => {
@@ -39,31 +42,29 @@ export class HomePage implements OnInit{
 
         this.trendingShows.forEach(
           (show: any) => {
-            show.media_type = 'tv';
             this.movieService.getShowDetails(show.id).subscribe(
               (details: any) => {
                 show.number_of_seasons = details.number_of_seasons;
               });
-            });
           });
+      });
+
+    this.favourites$ = this.favouritesService.getFavourites();
   }
 
   toggleView(showMovies: boolean) {
     this.showMovies = showMovies;
   }
 
-  favorites: any[] = [];
-
   toggleFavorite(item: any) {
-    const index = this.favorites.findIndex(fav => fav.id === item.id && fav.media_type === item.media_type);
-    if (index >= 0) {
-      this.favorites.splice(index, 1); 
+    if (this.favouritesService.isFavourite(item)) {
+      this.favouritesService.removeFavourite(item);
     } else {
-      this.favorites.push({ ...item }); 
+      this.favouritesService.addFavourite(item);
     }
   }
 
   isFavorite(item: any): boolean {
-    return this.favorites.some(fav => fav.id === item.id && fav.media_type === item.media_type);
-  }  
+    return this.favouritesService.isFavourite(item);
+  }
 }

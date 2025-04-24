@@ -153,3 +153,15 @@
   position: relative;
 }
 
+.links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.link:hover {
+  color: var(--ion-color-primary-shade);
+  text-decoration: none;
+}

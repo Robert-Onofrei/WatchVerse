@@ -1,15 +1,27 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>favourites</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Favourites</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">favourites</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="grid-container">
+    <div *ngFor="let item of favourites" class="grid-item" style="position: relative;">
+      <div class="favorite-icon" (click)="toggleFavorite(item)">
+        <ion-icon [name]="isFavorite(item) ? 'star' : 'star-outline'"></ion-icon>
+      </div>
+
+      <img
+        class="movie-poster"
+        [src]="'https://image.tmdb.org/t/p/w200' + item.poster_path"
+      />
+      <div class="movie-info">
+        <h3>{{ item.title || item.name }}</h3>
+        <p>Rating: {{ item.vote_average | number: '1.2-2' }}</p>
+      </div>
+    </div>
+  </div>
 </ion-content>
-
-

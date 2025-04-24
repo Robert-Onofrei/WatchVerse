@@ -7,20 +7,20 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-    </ion-toolbar>
-  </ion-header>
+  <div class="links" style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+    <span [routerLink]="['/movies']" class="link">Movies</span>
+    <span [routerLink]="['/shows']" class="link">Shows</span>
+    <span [routerLink]="['/favourites']" class="link">Favourites</span>
+  </div>
 
   <div class="trending-header">
     <h2>Trending</h2>
     <div class="toggle-buttons">
-      
       <ion-button (click)="toggleView(true)" [fill]="showMovies ? 'solid' : 'outline'">Movies</ion-button>
       <ion-button (click)="toggleView(false)" [fill]="!showMovies ? 'solid' : 'outline'">TV Shows</ion-button>
     </div>
   </div>
-  
+
   <ng-container *ngIf="showMovies">
     <div class="grid-container">
       <div class="grid-item" style="position: relative;" *ngFor="let movie of trendingMovies">
@@ -36,7 +36,7 @@
       </div>
     </div>
   </ng-container>
-  
+
   <ng-container *ngIf="!showMovies">
     <div class="grid-container">
       <div class="grid-item" style="position: relative;" *ngFor="let shows of trendingShows">
@@ -52,3 +52,4 @@
       </div>
     </div>
   </ng-container>
+</ion-content>
