@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FavouritesService } from '../services/favourites.service';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { IonHeader, IonIcon, IonToolbar, IonContent, IonTitle, IonButtons, IonBackButton } from '@ionic/angular/standalone';
+import { FavouritesService } from '../services/favourites.service';
 
 @Component({
   selector: 'app-favourites',
   templateUrl: 'favourites.page.html',
   styleUrls: ['favourites.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonHeader, IonIcon, IonToolbar, IonContent, IonTitle, IonButtons, IonBackButton],
+  imports: [CommonModule, IonHeader, IonIcon, IonToolbar, IonContent, IonTitle, IonButtons, IonBackButton, RouterLink],
 })
 export class FavouritesPage implements OnInit {
   favourites: any[] = [];  

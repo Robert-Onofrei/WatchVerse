@@ -13,6 +13,7 @@ import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonThumb
   providers: [MovieService, FavouritesService],
   imports: [IonIcon, IonCard, IonRow, IonCol, IonGrid, IonSegment, IonSegmentButton, RouterLink, IonButton, CommonModule, HttpClientModule, IonItem, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonThumbnail, IonLabel],
 })
+
 export class HomePage implements OnInit {
   trendingMovies: any[] = [];
   trendingShows: any[] = [];

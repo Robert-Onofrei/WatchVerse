@@ -1,20 +1,62 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { HttpClientModule } from '@angular/common/http';
+import { MovieService } from '../services/movie.service';
+import { FavouritesService } from '../services/favourites.service';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonButtons, IonBackButton } from '@ionic/angular/standalone';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-shows',
   templateUrl: './shows.page.html',
   styleUrls: ['./shows.page.scss'],
-  standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  providers: [MovieService, FavouritesService],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, RouterLink, IonButtons, IonBackButton, CommonModule, HttpClientModule],
 })
 export class ShowsPage implements OnInit {
+  popularShows: any[] = [];
+  favourites$: any[] = [];
+  currentPage: number = 1;
+  totalPages: number = 1;
 
-  constructor() { }
+  constructor(
+    private movieService: MovieService,
+    private favouritesService: FavouritesService
+  ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.loadShows();
+    this.favourites$ = this.favouritesService.getFavourites();
   }
 
+  loadShows(): void {
+    this.movieService.getPopularShows(this.currentPage).subscribe(
+      (data: any) => {
+        this.popularShows = data.results;
+        this.totalPages = data.total_pages;
+      },
+      (error) => {
+        console.error('Error fetching shows', error);
+      }
+    );
+  }
+
+  loadNextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.loadShows();
+    }
+  }
+
+  toggleFavorite(item: any) {
+    if (this.favouritesService.isFavourite(item)) {
+      this.favouritesService.removeFavourite(item);
+    } else {
+      this.favouritesService.addFavourite(item);
+    }
+  }
+
+  isFavorite(item: any): boolean {
+    return this.favouritesService.isFavourite(item);
+  }
 }
