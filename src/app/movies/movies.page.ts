@@ -20,27 +20,41 @@ export class MoviesPage implements OnInit {
   currentPage: number = 1;
   totalPages: number = 1;
 
-  constructor(
-    private movieService: MovieService,
-    private favouritesService: FavouritesService
-  ) {}
+  constructor(private movieService: MovieService, private favouritesService: FavouritesService) {}
 
   ngOnInit(): void {
+  }
+
+  ionViewWillEnter(): void {
+    this.currentPage = 1;
+    this.popularMovies = []; 
     this.loadMovies();
     this.favourites$ = this.favouritesService.getFavourites();
   }
+  
 
   loadMovies(): void {
     this.movieService.getPopularMovies(this.currentPage).subscribe(
       (data: any) => {
-        this.popularMovies = data.results;
         this.totalPages = data.total_pages;
+        const newMovies = data.results;
+
+        newMovies.forEach((movie: any) => {
+          this.movieService.getMovieDetails(movie.id).subscribe(
+            (details: any) => {
+              movie.runtime = details.runtime;
+            }
+          );
+        });
+  
+        this.popularMovies.push(...newMovies);
       },
       (error) => {
-        console.error('Error fetching movies', error);
+        console.error('Error fetching movies:', error);
       }
     );
   }
+  
 
   loadNextPage(): void {
     if (this.currentPage < this.totalPages) {

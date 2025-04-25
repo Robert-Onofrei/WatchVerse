@@ -1,55 +1,43 @@
 import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage-angular';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class FavouritesService {
   private favourites: any[] = [];
 
-  constructor() {
-    this.loadFavourites();
+  constructor(private storage: Storage) {
+    this.init();
   }
 
-  private loadFavourites(): void {
-    const stored = localStorage.getItem('favourites');
-    this.favourites = stored ? JSON.parse(stored) : [];
-  }
-
-  private saveFavourites(): void {
-    localStorage.setItem('favourites', JSON.stringify(this.favourites));
+  async init() {
+    await this.storage.create();
+    const stored = await this.storage.get('favourites');
+    this.favourites = stored || [];
   }
 
   getFavourites(): any[] {
-    return this.favourites; 
+    return this.favourites;
   }
 
-  addFavourite(item: any): void {
-    if (!item.media_type) {
-      item.media_type = item.title ? 'movie' : 'tv';
-    }
-
-    const index = this.favourites.findIndex(
-      (fav) => fav.id === item.id && fav.media_type === item.media_type
-    );
-    if (index === -1) {
+  async addFavourite(item: any) {
+    if (!this.isFavourite(item)) {
       this.favourites.push(item);
-      this.saveFavourites();
+      await this.saveFavourites();
     }
   }
 
-  removeFavourite(item: any): void {
-    const index = this.favourites.findIndex(
-      (fav) => fav.id === item.id && fav.media_type === item.media_type
-    );
-    if (index >= 0) {
-      this.favourites.splice(index, 1);
-      this.saveFavourites();
-    }
+  async removeFavourite(item: any) {
+    this.favourites = this.favourites.filter(fav => fav.id !== item.id);
+    await this.saveFavourites();
   }
 
   isFavourite(item: any): boolean {
-    return this.favourites.some(
-      (fav) => fav.id === item.id && fav.media_type === item.media_type
-    );
+    return this.favourites.some(fav => fav.id === item.id);
+  }
+
+  private async saveFavourites() {
+    await this.storage.set('favourites', this.favourites);
   }
 }

@@ -19,28 +19,41 @@ export class ShowsPage implements OnInit {
   currentPage: number = 1;
   totalPages: number = 1;
 
-  constructor(
-    private movieService: MovieService,
-    private favouritesService: FavouritesService
-  ) {}
+  constructor(private movieService: MovieService, private favouritesService: FavouritesService) {}
 
   ngOnInit(): void {
+  }
+
+  ionViewWillEnter(): void {
+    this.currentPage = 1;
+    this.popularShows = [];
     this.loadShows();
     this.favourites$ = this.favouritesService.getFavourites();
   }
+  
 
   loadShows(): void {
     this.movieService.getPopularShows(this.currentPage).subscribe(
       (data: any) => {
-        this.popularShows = data.results;
         this.totalPages = data.total_pages;
+        const newShows = data.results;
+  
+        newShows.forEach((show: any) => {
+          this.movieService.getShowDetails(show.id).subscribe(
+            (details: any) => {
+              show.number_of_seasons = details.number_of_seasons;
+            }
+          );
+        });
+  
+        this.popularShows.push(...newShows);
       },
       (error) => {
-        console.error('Error fetching shows', error);
+        console.error('Error fetching shows:', error);
       }
     );
   }
-
+  
   loadNextPage(): void {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;

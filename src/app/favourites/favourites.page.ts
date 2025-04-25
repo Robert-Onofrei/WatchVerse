@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FavouritesService } from '../services/favourites.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { IonHeader, IonIcon, IonToolbar, IonContent, IonTitle, IonButtons, IonBackButton } from '@ionic/angular/standalone';
-import { FavouritesService } from '../services/favourites.service';
 
 @Component({
   selector: 'app-favourites',
@@ -17,8 +17,13 @@ export class FavouritesPage implements OnInit {
   constructor(private favouritesService: FavouritesService) {}
 
   ngOnInit() {
-    this.favourites = this.favouritesService.getFavourites();
   }
+
+ ionViewWillEnter() {
+  this.favourites = [];
+  this.favourites = this.favouritesService.getFavourites();
+}
+
 
   toggleFavorite(item: any) {
     if (this.favouritesService.isFavourite(item)) {

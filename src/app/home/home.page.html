@@ -11,6 +11,7 @@
     <span [routerLink]="['/movies']" class="link">Movies</span>
     <span [routerLink]="['/shows']" class="link">Shows</span>
     <span [routerLink]="['/favourites']" class="link">Favourites</span>
+    <span (click)="openInBrowser()"  class="link">Send to Cinema</span>
   </div>
 
   <div class="trending-header">
