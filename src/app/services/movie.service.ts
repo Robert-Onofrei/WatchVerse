@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root', 
 })
+
+//This service is responsible for fetching movie and show data from the TMDB API
 export class MovieService {
   private apiKey = '7e7b7acd4214c869f56d52adf4888f9f';
 

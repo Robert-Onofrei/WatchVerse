@@ -1,3 +1,4 @@
+//Imports needed for the HomePage component
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
@@ -16,6 +17,7 @@ import { Storage } from '@ionic/storage-angular';
   imports: [IonIcon, IonCard, IonRow, IonCol, IonGrid, IonSegment, IonSegmentButton, RouterLink, IonButton, CommonModule, HttpClientModule, IonItem, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonThumbnail, IonLabel],
 })
 export class HomePage implements OnInit {
+  //Arrays
   trendingMovies: any[] = [];
   trendingShows: any[] = [];
   showMovies: boolean = true;
@@ -24,6 +26,7 @@ export class HomePage implements OnInit {
 
   constructor(private movieService: MovieService, private favouritesService: FavouritesService, private storage: Storage, private router: Router) {}
 
+  //Lifecycle 
   ngOnInit() {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
@@ -35,7 +38,8 @@ export class HomePage implements OnInit {
   ionViewWillEnter(): void {
     this.initStorage().then(() => {
       this.loadFavourites();
-  
+      
+      //Gets the trending movies and shows from the MovieService
       this.movieService.getTrendingMovies().subscribe((data: any) => {
         this.trendingMovies = data.results;
         this.trendingMovies.forEach((movie: any) => {
@@ -58,15 +62,17 @@ export class HomePage implements OnInit {
     });
   }
   
+  //Initializes the storage
   async initStorage() {
     await this.storage.create();
   }
   
-
+  //Function to set the active tab
   toggleView(showMovies: boolean) {
     this.showMovies = showMovies;
   }
 
+  //Toggle function to add or remove an item from the favourites list
   toggleFavorite(item: any) {
     if (this.favouritesService.isFavourite(item)) {
       this.favouritesService.removeFavourite(item);
@@ -78,10 +84,12 @@ export class HomePage implements OnInit {
     this.saveFavourites();
   }
 
+  //Saves the favourites list to the storage
   async saveFavourites() {
     await this.storage.set('favourites', this.favourites$);
   }
 
+  //Loads the favourites list from the storage
   async loadFavourites() {
     const fav = await this.storage.get('favourites');
 
@@ -96,6 +104,7 @@ export class HomePage implements OnInit {
     return this.favouritesService.isFavourite(item);
   }
 
+  //Open cinema link in the browser
   async openInBrowser() {
     await Browser.open({ url: 'https://www.omniplex.ie/cinema/galway' });
   }

@@ -5,7 +5,8 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { importProvidersFrom } from '@angular/core';
-import { isDevMode } from '@angular/core';
+
+//Imports thats needed, Ionic storage in particular
 
 bootstrapApplication(AppComponent, {
   providers: [

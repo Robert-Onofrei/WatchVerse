@@ -33,6 +33,7 @@ export class MoviesPage implements OnInit {
   }
   
 
+  //Loads movies from the API
   loadMovies(): void {
     this.movieService.getPopularMovies(this.currentPage).subscribe(
       (data: any) => {
@@ -55,7 +56,7 @@ export class MoviesPage implements OnInit {
     );
   }
   
-
+  //Loads the next page of movies
   loadNextPage(): void {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
@@ -63,6 +64,7 @@ export class MoviesPage implements OnInit {
     }
   }
 
+  //Toggles the favourite status of a movie
   toggleFavorite(item: any) {
     if (this.favouritesService.isFavourite(item)) {
       this.favouritesService.removeFavourite(item);
@@ -71,6 +73,7 @@ export class MoviesPage implements OnInit {
     }
   }
 
+  //Checks if a movie is a favourite
   isFavorite(item: any): boolean {
     return this.favouritesService.isFavourite(item);
   }

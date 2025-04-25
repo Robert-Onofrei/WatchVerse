@@ -9,12 +9,14 @@
 
 <ion-content [fullscreen]="true">
   <div class="links" style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+    <!-- Routes to pages -->
     <span [routerLink]="['/movies']" class="link">Movies</span>
     <span [routerLink]="['/shows']" class="link">Shows</span>
     <span [routerLink]="['/favourites']" class="link">Favourites</span>
   </div>
 
   <div class="grid-container">
+    <!-- For loop to print all info and posters -->
     <div class="grid-item" style="position: relative;" *ngFor="let movie of popularMovies">
       <div class="favorite-icon" (click)="toggleFavorite(movie)">
         <ion-icon [name]="isFavorite(movie) ? 'star' : 'star-outline'"></ion-icon>

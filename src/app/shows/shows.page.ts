@@ -32,6 +32,7 @@ export class ShowsPage implements OnInit {
   }
   
 
+  //Loads the popular shows from the movie service 
   loadShows(): void {
     this.movieService.getPopularShows(this.currentPage).subscribe(
       (data: any) => {
@@ -54,6 +55,7 @@ export class ShowsPage implements OnInit {
     );
   }
   
+  //Load the next page of shows
   loadNextPage(): void {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
@@ -61,6 +63,7 @@ export class ShowsPage implements OnInit {
     }
   }
 
+  //Toggle the favourite status of a show
   toggleFavorite(item: any) {
     if (this.favouritesService.isFavourite(item)) {
       this.favouritesService.removeFavourite(item);

@@ -1,3 +1,4 @@
+//Imports needed for the FavouritesPage component
 import { Component, OnInit } from '@angular/core';
 import { FavouritesService } from '../services/favourites.service';
 import { CommonModule } from '@angular/common';
@@ -24,7 +25,7 @@ export class FavouritesPage implements OnInit {
   this.favourites = this.favouritesService.getFavourites();
 }
 
-
+  //Function to toggle an item from the favourites list
   toggleFavorite(item: any) {
     if (this.favouritesService.isFavourite(item)) {
       this.favouritesService.removeFavourite(item);
@@ -33,6 +34,7 @@ export class FavouritesPage implements OnInit {
     }
   }
 
+  //Function to check if an item is in the favourites list
   isFavorite(item: any): boolean {
     return this.favouritesService.isFavourite(item);
   }
